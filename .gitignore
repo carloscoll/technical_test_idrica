@@ -1,0 +1,11 @@
+#poetry
+poetry.lock
+
+#ide
+.idea/
+
+# Test results
+.pytest_cache/
+
+# FastAPI specific
+instance/

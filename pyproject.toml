@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "technical-test-idrica"
+version = "0.1.0"
+description = ""
+authors = ["Carlos Coll <collhuer@gmail.com>"]
+readme = "README.md"
+packages = [{include = "technical_test_idrica"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.112.0"
+uvicorn = "^0.30.6"
+pandas = "^2.2.2"
+scikit-learn = "^1.5.1"
+pydantic = "^2.8.2"
+numpy = "^2.0.1"
+peewee = "^3.17.6"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
