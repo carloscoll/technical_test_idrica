@@ -9,3 +9,9 @@ poetry.lock
 
 # FastAPI specific
 instance/
+
+# coverage
+.coverage
+
+# pycache
+__pycache__/
