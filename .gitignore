@@ -15,3 +15,12 @@ instance/
 
 # pycache
 __pycache__/
+
+#db
+db/
+
+#ml models
+ml_models/
+
+#data
+data/
