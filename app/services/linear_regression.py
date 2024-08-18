@@ -28,9 +28,7 @@ def train_lr_model(dataset: DataFrame, train_percentage: float = 0.8):
 
     save_model_with_incremental_versioning(model)
 
-    print(f"Root Mean Squared Error: {rmse}")
-    print(f"Mean Squared Error: {mse}")
-    print(f"Cross-Validation MSE: {mean_cv_score}")
+    return model, mse, rmse, mean_cv_score
 
 
 def get_latest_version(model_directory="ml_models"):
