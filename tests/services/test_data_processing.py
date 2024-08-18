@@ -28,7 +28,6 @@ def test_upload_csv_invalid_values(mocker):
     mocker.patch('builtins.open', mocker.mock_open(read_data=mock_csv_data))
     df = upload_csv('mock_file')
 
-    # Verificar que los valores no numéricos se convierten en NaN
     assert pd.isna(df['sensor_b'].iloc[0])
     assert pd.isna(df['sensor_a'].iloc[1])
 
@@ -42,7 +41,6 @@ def test_preprocess_data_nan_filled_correctly():
 
     df_processed = preprocess_data(df)
 
-    # Verificar que los NaN se hayan rellenado correctamente
     assert df_processed['sensor_a'].iloc[2] == (5.0 + 6.0) / 2
     assert df_processed['sensor_b'].iloc[3] == (6000 + 7000 + 7500) / 3
 
@@ -56,7 +54,6 @@ def test_preprocess_data_clipping():
 
     df_processed = preprocess_data(df)
 
-    # Verificar que los valores estén dentro de los límites
     assert df_processed['sensor_a'].iloc[0] == 4.0
     assert df_processed['sensor_a'].iloc[1] == 7.5
     assert df_processed['sensor_b'].iloc[0] == 5000
