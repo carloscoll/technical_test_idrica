@@ -1,4 +1,4 @@
-# My FastAPI Project
+# Idrica technical test
 
 Este proyecto es una aplicación desarrollada en **FastAPI** que está dockerizada y lista para ejecutarse tanto en local 
 como usando Docker y Docker Compose. A continuación, se detallan las instrucciones para arrancar la aplicación, cómo 
