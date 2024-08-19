@@ -1,8 +1,6 @@
 # Idrica technical test
 
-Este proyecto es una aplicación desarrollada en **FastAPI** que está dockerizada y lista para ejecutarse tanto en local 
-como usando Docker y Docker Compose. A continuación, se detallan las instrucciones para arrancar la aplicación, cómo 
-acceder a la base de datos, y una breve explicación de los diferentes módulos que componen el proyecto.
+Este proyecto es una aplicación web desarrollada en FastAPI que implementa un modelo de Machine Learning para predecir la dosificación óptima de un químico en el proceso de potabilización de agua. La aplicación permite la carga de datos desde archivos CSV, el entrenamiento de un modelo de regresión lineal, y la predicción de valores futuros. Además, la aplicación está preparada para ser ejecutada en entornos Docker, lo que facilita su despliegue y escalabilidad.A continuación, se detallan las instrucciones para arrancar la aplicación, cómo acceder a la base de datos, y una breve explicación de los diferentes módulos que componen el proyecto.
 
 ## Requisitos Previos
 - **Python 3.8+**
@@ -11,9 +9,8 @@ acceder a la base de datos, y una breve explicación de los diferentes módulos 
 - **Docker Compose** (si deseas ejecutar varios servicios en conjunto)
 
 ## Arranque de la Aplicación en Local
-
 ### 1. Clonar el Repositorio 
-```git clone https://github.com/tu-usuario/tu-repositorio.git cd tu-repositorio```
+```git clone git@github.com:tu-usuario/tu-repositorio.git cd tu-repositorio```
 ### 2. Instalar Dependencias
 Asegúrate de tener `poetry` instalado y luego ejecuta: ```poetry install```
 ### 3. Ejecutar la Aplicación
@@ -31,7 +28,7 @@ Ejecutar Docker Compose```docker-compose up --build```
 Esto levantará la aplicación junto con cualquier otro servicio definido en el archivo `docker-compose.yml`
 ## Acceso a la Base de Datos
 Si estás usando SQLite (como se describe en el proyecto):
-- El archivo de la base de datos SQLite estará en la carpeta `bd/` dentro del proyecto.
+- El archivo de la base de datos SQLite estará en la carpeta `db/` dentro del proyecto.
 - Para acceder a la base de datos, puedes usar herramientas como [DB Browser for SQLite](https://sqlitebrowser.org/) o 
 cualquier otro cliente SQLite. Para acceder desde dentro del contenedor, puedes ejecutar:```docker exec -it <container_id> sqlite3 /app/db/predictions.db```
 ## Estructura del Proyecto
