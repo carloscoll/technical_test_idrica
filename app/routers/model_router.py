@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from starlette import status
 
 from app.services.data_processing import read_csv, preprocess_data
-from app.services.linear_regression import train_lr_model
+from app.services.linear_regression import train_lr_model, predict
 
 model_router = APIRouter()
 
@@ -34,3 +34,17 @@ async def train_model_endpoint(body: TrainModelRequestBody):
 
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Error training the model. {str(e)}")
+
+
+@model_router.post("/predict")
+async def predict_endpoint(body: PredictRequestBody):
+    try:
+        predicted_item = predict(body.value)
+        print(predicted_item)
+        return {
+            "message": "New value predicted and stored in the database successfully",
+            "data": predicted_item
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Error predicting a new value. {str(e)}")

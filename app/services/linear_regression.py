@@ -1,11 +1,15 @@
 import os
 import re
+from typing import Dict
 
-import joblib
+import pandas as pd
 from pandas import DataFrame
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split, cross_val_score
+import joblib
+
+from app.models import Predictions
 
 
 def train_lr_model(dataset: DataFrame, train_percentage: float = 0.8):
@@ -66,3 +70,12 @@ def load_latest_version_model(model_directory: str = "ml_models") -> LinearRegre
     model = joblib.load(model_path)
     print(f"Model loaded from: {model_path}")
     return model
+
+
+def predict(data_point: float) -> Dict:
+    X_new = pd.DataFrame({'sensor_b': [data_point]})
+    model = load_latest_version_model()
+    value_predicted = model.predict(X_new)
+    prediction = Predictions.create(sensor_b=data_point, predicted=value_predicted)
+
+    return prediction.__data__

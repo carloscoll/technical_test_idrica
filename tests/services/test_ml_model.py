@@ -26,4 +26,4 @@ def test_prediction_function():
     sensor_b_value = 6500
     predicted_value = predict(sensor_b_value)
 
-    assert 4.0 <= predicted_value.value <= 7.5
+    assert 4.0 <= predicted_value['value'] <= 7.5
