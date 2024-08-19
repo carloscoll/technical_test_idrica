@@ -13,9 +13,9 @@ acceder a la base de datos, y una breve explicación de los diferentes módulos 
 ## Arranque de la Aplicación en Local
 
 ### 1. Clonar el Repositorio 
-```bash\ngit clone https://github.com/tu-usuario/tu-repositorio.git\ncd tu-repositorio\n```
+```git clone https://github.com/tu-usuario/tu-repositorio.git cd tu-repositorio```
 ### 2. Instalar Dependencias
-Asegúrate de tener `poetry` instalado y luego ejecuta: ```bash\npoetry install\n```
+Asegúrate de tener `poetry` instalado y luego ejecuta: ```poetry install```
 ### 3. Ejecutar la Aplicación
 Una vez instaladas las dependencias, puedes arrancar la aplicación con el siguiente comando:
 ```poetry run uvicorn app.main:app --reload``` Esto ejecutará el servidor en `http://127.0.0.1:8000` con 
