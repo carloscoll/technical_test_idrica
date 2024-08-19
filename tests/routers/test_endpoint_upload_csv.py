@@ -1,4 +1,5 @@
-import pandas as pd
+import io
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -9,28 +10,31 @@ client = TestClient(app)
 
 @pytest.fixture
 def mock_upload_csv(mocker):
-    mocker.patch('app.routers.csv_upload_router.upload_csv', return_value=pd.DataFrame({
-        'timestamp': ['2023-01-01T12:00:00', '2023-01-01T12:01:00', '2023-01-01T12:02:00'],
-        'sensor_a': [5.828125, 6.584896, 6.847396],
-        'sensor_b': [6313.940244, 5931.038263, 5672.298411]
-    }))
+    return mocker.patch('app.routers.csv_upload_router.upload_csv', return_value="data/test_data.csv")
 
 
 def test_upload_csv_success(mock_upload_csv):
-    response = client.post("/upload", json={"file_name": "test"})
+    file_content = b"timestamp,sensor_a,sensor_b\n2023-01-01T12:00:00,5.828125,6313.940244\n"
+    file_like = io.BytesIO(file_content)
+    file_like.name = "test_data.csv"
+
+    response = client.post("/upload", files={"file": (file_like.name, file_like, "text/csv")})
+
     assert response.status_code == 200
     assert "message" in response.json()
-    assert response.json()["message"] == "File uploaded successfully"
-    assert "data" in response.json()
-    assert response.json()["data"] == {
-        'timestamp': {'0': '2023-01-01T12:00:00', '1': '2023-01-01T12:01:00', '2': '2023-01-01T12:02:00'},
-        'sensor_a': {'0': 5.828125, '1': 6.584896, '2': 6.847396},
-        'sensor_b': {'0': 6313.940244, '1': 5931.038263, '2': 5672.298411}
-    }
+    assert response.json()["message"] == "File 'test_data.csv' uploaded successfully"
+    assert "file_path" in response.json()
+    assert response.json()["file_path"] == "data/test_data.csv"
 
 
 def test_upload_csv_failure(mocker):
-    mocker.patch('app.services.data_processing.upload_csv', side_effect=Exception("Error processing file"))
-    response = client.post("/upload", json={"file_name": "data1"})
+    mocker.patch('app.routers.csv_upload_router.upload_csv', side_effect=Exception("Error processing file"))
+
+    file_content = b"timestamp,sensor_a,sensor_b\n2023-01-01T12:00:00,5.828125,6313.940244\n"
+    file_like = io.BytesIO(file_content)
+    file_like.name = "test_data.csv"
+
+    response = client.post("/upload", files={"file": (file_like.name, file_like, "text/csv")})
+
     assert response.status_code == 400
     assert "detail" in response.json()

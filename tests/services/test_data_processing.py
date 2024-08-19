@@ -1,6 +1,6 @@
 import pandas as pd
 
-from app.services.data_processing import preprocess_data, upload_csv
+from app.services.data_processing import preprocess_data, read_csv
 
 
 def test_upload_csv_valid_file(mocker):
@@ -11,7 +11,7 @@ def test_upload_csv_valid_file(mocker):
                        2023-01-01T12:03:00,null,5639.848733"""
 
     mocker.patch('builtins.open', mocker.mock_open(read_data=mock_csv_data))
-    df = upload_csv('mock_file')
+    df = read_csv('mock_file')
 
     assert df['sensor_a'].dtype == 'float64'
     assert df['sensor_b'].dtype == 'float64'
@@ -26,7 +26,7 @@ def test_upload_csv_invalid_values(mocker):
                        2023-01-01T12:01:00,null,5931.038263"""
 
     mocker.patch('builtins.open', mocker.mock_open(read_data=mock_csv_data))
-    df = upload_csv('mock_file')
+    df = read_csv('mock_file')
 
     assert pd.isna(df['sensor_b'].iloc[0])
     assert pd.isna(df['sensor_a'].iloc[1])
